@@ -1,0 +1,11 @@
+# WKAL v1.0
+# 'clean' konieczny przy zmianach w 'zeller.inc'
+
+WKAL.COM: MAIN.OBJ
+          tlink /t /x MAIN.OBJ,WKAL.COM
+
+MAIN.OBJ: MAIN.ASM
+          tasm /m3 MAIN.ASM
+
+CLEAN:
+       del MAIN.OBJ
