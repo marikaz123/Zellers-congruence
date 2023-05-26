@@ -4,7 +4,7 @@
 ; h - dzien tygodnia (0=sobota ...)
 ; q - dzien miesiaca
 ; m - miesiac  (styczen, luty: m+=12)
-; Y - rok      (styczen, luty: Y-=Y)
+; Y - rok      (styczen, luty: Y-=1)
 ;                                                 impl. 'marikaz'
 ;----------------------------------------------------------------
 
