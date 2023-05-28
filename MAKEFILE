@@ -3,9 +3,15 @@
 
 WKAL.COM: MAIN.OBJ
           tlink /t /x MAIN.OBJ,WKAL.COM
-
-MAIN.OBJ: MAIN.ASM
+WKAL.OBJ: MAIN.ASM
           tasm /m3 MAIN.ASM
 
+# WK v1.0c - wersja dla daty z linii polecen DOS
+
+WK.COM: MAIN_CMD.OBJ
+          tlink /t /x MAIN_CMD.OBJ,WK.COM
+MAIN_CMD.OBJ: MAIN_CMD.ASM
+          tasm /m3 MAIN_CMD.ASM
+
 CLEAN:
-       del MAIN.OBJ
+       del *.OBJ
