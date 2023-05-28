@@ -92,7 +92,7 @@ again:
                 cmp ax,39h
                 ja  err0
                 sub ax,30h
-                add Y,ax
+                mov Y,ax
 
                 dec bx
                 mov cx,10
@@ -148,7 +148,7 @@ again:
                 cmp ax,39h
                 ja  err0
                 sub ax,30h
-                add m,ax
+                mov m,ax
                 jmp getDay
      twoDigits:
                 mov al,[month+3]
@@ -157,7 +157,7 @@ again:
                 cmp ax,39h
                 ja err0
                 sub ax,30h
-                add m,ax
+                mov m,ax
 
                 mov cx,10
                 mov al,[month+2]
@@ -189,7 +189,7 @@ again:
                 cmp ax,39h
                 ja  err0
                 sub ax,30h
-                add q,ax
+                mov q,ax
                 jmp next
     twoDigits2:
                 mov al,[day+3]
@@ -198,7 +198,7 @@ again:
                 cmp ax,39h
                 ja err0
                 sub ax,30h
-                add q,ax
+                mov q,ax
 
                 mov cx,10
                 mov al,[day+2]
@@ -309,10 +309,6 @@ ClearBuffers    PROC
                 inc di
                 mov cx,4
                 rep stosb
-                lea di,h
-                mov ax,0
-                mov cx,4
-                rep stosw
                 ret
 ClearBuffers    ENDP
 
