@@ -1,22 +1,32 @@
-;---------------------------------------------------------------------------
-; 'Wieczny Kalendarz' * WKAL v1.0 * MOD0523 * (c)1994 'marikaz'
-;---------------------------------------------------------------------------
+;----------------------------------------------------------------------------
+; 'Wieczny Kalendarz' * WKAL v1.0 * MOD0523 * MAIN rev. 1 * (c)1994 'marikaz'
+;----------------------------------------------------------------------------
 ; Program podaje dzien tygodna na podstawie wprowadzonej daty. TU z zakresu
-; od 1800/01/01 do 2299/12/31, ale uzytkownik powinien zadbac o sensownosc
+; od 1000/01/01 do 9999/12/31, ale uzytkownik powinien zadbac o sensownosc
 ; tej daty. Np. date 2020/04/31 program uzna za prawidlowa i poda dzien
-; tygodnia ale oczywiscie dla 1 maja.
-;---------------------------------------------------------------------------
+; tygodnia ale oczywiscie dla 1/05.
+;----------------------------------------------------------------------------
 
-GETCURSORPOS MACRO
-             mov ah,3
-             mov bx,0
-             int 10h
-             ENDM
+GETCURSORPOS    MACRO
+                mov ah,3
+                mov bx,0
+                int 10h
+                ENDM
 
+PRINTSTRING     MACRO addr
+                lea dx,addr
+                mov ah,9
+                int 21h
+                ENDM
+
+GETDATAFROMCON  MACRO data
+                lea dx,data
+                mov ah,0ah
+                int 21h
+                ENDM
 
 code SEGMENT PARA 'code'
      ASSUME cs:code
-
      ORG 100h
 .386
 
@@ -61,30 +71,19 @@ day      DB 3,?,0,0,0
 cRow     DB ?
 
 main:
-                mov dx,OFFSET info
-                mov ah,9
-                int 21h
+                PRINTSTRING info
                 GETCURSORPOS
                 mov cRow,dh
 again:
                 call ClearBuffers
                 call StartPos
-                mov dx,OFFSET clear
-                mov ah,9
-                int 21h
+                PRINTSTRING clear
                 call StartPos
-
-                mov dx,OFFSET txt1
-                mov ah,9
-                int 21h
-
-                mov dx,OFFSET year
-                mov ah,0ah
-                int 21h
+                PRINTSTRING txt1
+                GETDATAFROMCON year
 
                 xor dx,dx
                 mov bx,5 ;offset ostatniej cyfry
-
                 ;pobierz rok
                 mov ax,0
                 mov al,[year+bx]
@@ -129,26 +128,17 @@ again:
                 mul cx
                 add Y,ax
 
-                cmp Y,1800
+                cmp Y,1000
                 jb  err0
-                cmp Y,2299
+                cmp Y,9999
                 ja  err0
 
                 ;miesiac
                 call StartPos
-                mov dx,OFFSET clear
-                mov ah,9
-                int 21h
+                PRINTSTRING clear
                 call StartPos
-
-                mov dx,OFFSET txt2
-                mov ah,9
-                int 21h
-
-                mov dx,OFFSET month
-                mov ah,0ah
-                int 21h
-
+                PRINTSTRING txt2
+                GETDATAFROMCON month
                 mov ax,0
                 cmp [month+3],0dh
                 jne twoDigits
@@ -186,19 +176,10 @@ again:
 
        getDay:  ;dzien
                 call StartPos
-                mov dx,OFFSET clear
-                mov ah,9
-                int 21h
+                PRINTSTRING clear
                 call StartPos
-
-                mov dx,OFFSET txt3
-                mov ah,9
-                int 21h
-
-                mov dx,OFFSET day
-                mov ah,0ah
-                int 21h
-
+                PRINTSTRING txt3
+                GETDATAFROMCON day
                 mov ax,0
                 cmp [day+3],0dh
                 jne twoDigits2
@@ -280,15 +261,9 @@ getDOW:
                 rep movsb
 
                 call StartPos
-                mov dx,OFFSET clear
-                mov ah,9
-                int 21h
+                PRINTSTRING clear
                 call StartPos
-
-                mov dx,OFFSET output
-                mov ah,9
-                int 21h
-
+                PRINTSTRING output
                 GETCURSORPOS
                 mov cRow,dh
     waitKey:
@@ -308,9 +283,7 @@ exit:
                 mov ah,4ch
                 int 21h
 err0:
-                mov dx,OFFSET errTxt
-                mov ah,9
-                int 21h
+                PRINTSTRING errTxt
                 GETCURSORPOS
                 mov cRow,dh
                 jmp waitKey
@@ -343,7 +316,7 @@ ClearBuffers    PROC
                 ret
 ClearBuffers    ENDP
 
-INCLUDE zeller.inc
+                INCLUDE zeller.inc
 
 code     ENDS
          END start
