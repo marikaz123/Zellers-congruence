@@ -2,7 +2,7 @@
 ; 'Wieczny Kalendarz' * WKAL v1.0 * MOD0523 * MAIN rev. 1 * (c)1994 'marikaz'
 ;----------------------------------------------------------------------------
 ; Program podaje dzien tygodna na podstawie wprowadzonej daty. TU z zakresu
-; od 1000/01/01 do 9999/12/31, ale uzytkownik powinien zadbac o sensownosc
+; od 1583/01/01 do 9999/12/31, ale uzytkownik powinien zadbac o sensownosc
 ; tej daty. Np. date 2020/04/31 program uzna za prawidlowa i poda dzien
 ; tygodnia ale oczywiscie dla 1/05.
 ;----------------------------------------------------------------------------
@@ -128,7 +128,7 @@ again:
                 mul cx
                 add Y,ax
 
-                cmp Y,1000
+                cmp Y,1583
                 jb  err0
                 cmp Y,9999
                 ja  err0

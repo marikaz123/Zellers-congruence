@@ -13,7 +13,7 @@ usage    DB 0dh,0ah,' Uzycie: wk <YYYY-MM-DD>',0dh,0ah,0dh,0ah
          DB ' YYYY = Rok     (4 cyfry)',0dh,0ah
          DB '   MM = Miesiac (2 cyfry)',0dh,0ah
          DB '   DD = Dzien   (2 cyfry)',0dh,0ah,0dh,0ah
-         DB ' Zakres od 1000-01-01 do 9999-12-31',13,10,'$'
+         DB ' Zakres od 1583-01-01 do 9999-12-31',13,10,'$'
 
 output   DB 0dh,0ah,20h,20h,20h
 dow      DB 12 DUP (20h),13,10,'$'
@@ -83,7 +83,10 @@ begin:
                 ja prnUsage
                 sub al,30h
                 add Y,ax
-                ;nie jest konieczne sprawdzanie zakresu dla lat
+
+                cmp Y,1583
+                jb  prnUsage
+
                 lodsb
                 cmp al,'-'
                 jne prnUsage
