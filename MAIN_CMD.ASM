@@ -42,7 +42,7 @@ begin:
                 lodsb
                 cmp al,20h
                 je skipBS
-                cmp  al,8
+                cmp  al,9
                 je skipBS
                 ;ROK
                 cmp al,31h      ;rok od 1
@@ -147,7 +147,7 @@ skipBS2:
                 je prnUsage
                 cmp al,20h
                 je skipBS2
-                cmp al,8
+                cmp al,9
                 je skipBS2
                 cmp al,0dh
                 jne prnUsage
