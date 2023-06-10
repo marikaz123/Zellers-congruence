@@ -13,8 +13,8 @@ GETCURSORPOS    MACRO
                 int 10h
                 ENDM
 
-PRINTSTRING     MACRO addr
-                lea dx,addr
+PRINTSTRING     MACRO string
+                lea dx,string
                 mov ah,9
                 int 21h
                 ENDM
@@ -140,7 +140,7 @@ again:
                 PRINTSTRING txt2
                 GETDATAFROMCON month
                 mov ax,0
-                cmp [month+3],0dh
+                cmp [month+1],1
                 jne twoDigits
                 mov al,[month+2]
                 cmp ax,31h    ;dla jednej cyfry musi byc 1
@@ -181,7 +181,7 @@ again:
                 PRINTSTRING txt3
                 GETDATAFROMCON day
                 mov ax,0
-                cmp [day+3],0dh
+                cmp [day+1],1
                 jne twoDigits2
                 mov al,[day+2]
                 cmp ax,31h    ;dla jednej cyfry musi byc 1
